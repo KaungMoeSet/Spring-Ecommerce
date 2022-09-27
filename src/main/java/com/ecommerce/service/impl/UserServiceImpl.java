@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public String register(User user) {
-		User oldUser = userRepository.findByUsername(user.getUsername());
+		User oldUser = userRepository.findByEmail(user.getEmail());
 		if( oldUser == null ) {
 			user.setPassword(passwordEncoder.encode(user.getPassword()));
 			userRepository.save(user);

@@ -8,7 +8,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,15 +20,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Document(collection = "users")
-public class User implements UserDetails {
+public class User  extends BaseDocument implements UserDetails {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	@Id
-	private String id;
 	
 	@NotEmpty
 	private String username;
@@ -43,6 +40,9 @@ public class User implements UserDetails {
 	private String password;
 
 	private List<Role> roles;
+	
+	@DBRef
+	private Address address;
 
 	private Boolean locked = true;
 
