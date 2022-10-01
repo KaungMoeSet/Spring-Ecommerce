@@ -1,8 +1,9 @@
 package com.ecommerce.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -20,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Document(collection = "users")
-public class User  extends BaseDocument implements UserDetails {
+public class User  extends BaseDocument {
 
 	/**
 	 * 
@@ -28,18 +29,21 @@ public class User  extends BaseDocument implements UserDetails {
 	private static final long serialVersionUID = 1L;
 	
 	@NotEmpty
+	@Size(max = 20)
 	private String username;
 
 	private Gender gender;
 	
 	@Email
+	@Size(max = 50)
 	private String email;
 	
 	@NotEmpty
-	@Size(min = 8, message = "Minimum password length: 8 characters")
+	@Size(max = 20,min = 8, message = "Minimum password length: 8 characters")
 	private String password;
 
-	private List<Role> roles;
+	@DBRef
+	private Set<Role> roles;
 	
 	@DBRef
 	private Address address;
@@ -49,38 +53,11 @@ public class User  extends BaseDocument implements UserDetails {
 	private Boolean enabled = true;
 
 	
-	public User(String username, Gender gender, String email, String password, List<Role> roles) {
+	public User(String username, Gender gender, String email, String password) {
 		super();
 		this.username = username;
 		this.gender = gender;
 		this.email = email;
 		this.password = password;
-		this.roles = roles;
-	}
-
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		SimpleGrantedAuthority authority = new SimpleGrantedAuthority(roles.toString());
-		return Collections.singletonList(authority);
-	}
-
-	@Override
-	public boolean isAccountNonExpired() {
-		return false;
-	}
-
-	@Override
-	public boolean isAccountNonLocked() {
-		return locked;
-	}
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return false;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return enabled;
 	}
 }

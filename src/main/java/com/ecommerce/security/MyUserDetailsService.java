@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.ecommerce.dto.MyUserDetails;
 import com.ecommerce.model.User;
 import com.ecommerce.repository.UserRepository;
 
@@ -23,15 +24,8 @@ public class MyUserDetailsService implements UserDetailsService {
 		if( user == null) {
 			throw new UsernameNotFoundException("User '" + username + "' not found");
 		}
-		return org.springframework.security.core.userdetails.User//
-				.withUsername(username)//
-				.password(user.getPassword())//
-				.authorities(user.getRoles())//
-				.accountExpired(user.isAccountNonExpired())//
-				.accountLocked(!user.isAccountNonLocked())//
-				.credentialsExpired(user.isCredentialsNonExpired())//
-				.disabled(!user.isEnabled())//
-				.build();
+		
+		return MyUserDetails.build(user);
 	}
 
 }

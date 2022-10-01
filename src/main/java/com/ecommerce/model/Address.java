@@ -28,4 +28,5 @@ public class Address extends BaseDocument {
 	
 	@NotBlank
 	private int phoneNumber;
+	
 }

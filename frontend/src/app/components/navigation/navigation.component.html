@@ -6,10 +6,6 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarText" [ngSwitch]="loggedType">
 
-      <div *ngSwitchCase="'home'">
-<!--        <a class="nav-link" routerLink="/login">Login</a>-->
-      </div>
-
       <div *ngSwitchCase="'customer'" class="collapse navbar-collapse" >
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
@@ -17,12 +13,14 @@
         </li>
       </ul>
         <a class="nav-link" routerLink="/cart" routerLinkActive="active">
+          cart
           <i class="fa-solid fa-cart-shopping logo"></i>
         </a>
         <a class="nav-link" routerLink="/profile" routerLinkActive="active">
+          profile
           <i class="fa-solid fa-user logo"></i>
         </a>
-        <button type="button" class="btn btn-danger" routerLink="/logout">Logout</button>
+        <button (click)="logout()" type="button" class="btn btn-danger">Logout</button>
       </div>
 
       <div *ngSwitchCase="'admin'" class="collapse navbar-collapse">
@@ -40,7 +38,7 @@
         <a class="nav-link" routerLink="/profile" routerLinkActive="active">
           <i class="fa-solid fa-user logo"></i>
         </a>
-        <button type="button" class="btn btn-danger" routerLink="/logout">Logout</button>
+        <button (click)="logout()" type="button" class="btn btn-danger">Logout</button>
       </div>
 
     </div>

@@ -9,13 +9,14 @@ import {RegisterComponent} from './components/register/register.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {NotFoundComponent} from './components/not-found/not-found.component';
 import { HomePageComponent } from './page/home-page/home-page.component';
-import { LogoutComponent } from './components/logout/logout.component';
 import { LoginComponent } from './components/login/login.component';
 import { CartComponent } from './components/cart/cart.component';
 import { OrderComponent } from './components/order/order.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AdminPageComponent } from './page/admin-page/admin-page.component';
 import { CustomerAccountPageComponent } from './page/customer-account-page/customer-account-page.component';
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {TokenInterceptor} from "./auth/interceptor/TokenInterceptor";
 
 @NgModule({
   declarations: [
@@ -24,7 +25,6 @@ import { CustomerAccountPageComponent } from './page/customer-account-page/custo
     RegisterComponent,
     NotFoundComponent,
     HomePageComponent,
-    LogoutComponent,
     LoginComponent,
     CartComponent,
     OrderComponent,
@@ -33,12 +33,19 @@ import { CustomerAccountPageComponent } from './page/customer-account-page/custo
     CustomerAccountPageComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     NgbModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

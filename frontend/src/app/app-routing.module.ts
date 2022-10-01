@@ -3,7 +3,6 @@ import {RouterModule, Routes} from '@angular/router';
 import {NotFoundComponent} from "./components/not-found/not-found.component";
 import {RegisterComponent} from "./components/register/register.component";
 import {HomePageComponent} from "./page/home-page/home-page.component";
-import {LogoutComponent} from "./components/logout/logout.component";
 import {AuthGuard} from "./auth/auth.guard";
 import {LoginComponent} from "./components/login/login.component";
 import {CartComponent} from "./components/cart/cart.component";
@@ -13,25 +12,29 @@ import {AdminPageComponent} from "./page/admin-page/admin-page.component";
 import {CustomerAccountPageComponent} from "./page/customer-account-page/customer-account-page.component";
 
 const routes: Routes = [
-  { path:  "", pathMatch:  "full",redirectTo:  "login"},
+  {path:  "", pathMatch:  "full",redirectTo:  "home"},
   { path: 'home',
-    component: HomePageComponent },
+    component: HomePageComponent,
+    canActivate: [AuthGuard] },
   { path: 'cart',
-    component: CartComponent },
+    component: CartComponent,
+    canActivate: [AuthGuard] },
   { path: 'profile',
-    component: ProfileComponent },
+    component: ProfileComponent,
+    canActivate: [AuthGuard] },
   { path: 'order',
-    component: OrderComponent },
+    component: OrderComponent,
+    canActivate: [AuthGuard] },
   { path: 'admin',
-    component: AdminPageComponent },
+    component: AdminPageComponent,
+    canActivate: [AuthGuard] },
   { path: 'accounts',
-    component: CustomerAccountPageComponent },
+    component: CustomerAccountPageComponent,
+    canActivate: [AuthGuard] },
   { path: 'login',
     component: LoginComponent },
   { path:  'register',
     component: RegisterComponent },
-  { path:  'logout',
-    component: LogoutComponent},
   { path: '**',
     component: NotFoundComponent },
 ];

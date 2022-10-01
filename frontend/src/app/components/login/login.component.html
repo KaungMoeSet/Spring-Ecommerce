@@ -1,15 +1,26 @@
+<h2 align="center" style="color: blueviolet">Please Login!</h2>
 <div class="container-fluid"
      style="padding-top: 2rem; width: 30%; align-self: center">
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <div class="mb-3 row">
+    <div class="form-outline mb-4">
       <label class="form-label" for="username">User Name:</label>
-      <input type="email" id="username" class="form-control"/>
+      <input type="text" id="username" class="form-control" formControlName="username"
+             [ngClass]="{ 'is-invalid': submitted && loginFormControl.username.errors }"/>
+      <div *ngIf="submitted" class="invalid-feedback">
+        <div *ngIf="loginFormControl.username.errors?.['required']" role="alert">Username is required</div>
+      </div>
     </div>
     <div class="form-outline mb-4">
       <label class="form-label" for="password">Password:</label>
-      <input type="password" id="password" class="form-control"/>
+      <input type="password" id="password" class="form-control" formControlName="password"
+             [ngClass]="{ 'is-invalid': submitted && loginFormControl.password.errors }"/>
+      <div *ngIf="submitted" class="invalid-feedback">
+        <div *ngIf="loginFormControl.password.errors?.['required']" role="alert">Password is required</div>
+      </div>
     </div>
-    <button class="btn btn-primary form-control" type="submit" style="font-size: 20px">Login</button>
+    <button [disabled]="loading" class="btn btn-primary form-control" type="submit" style="font-size: 20px">
+      <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+      Login</button>
   </form><br>
   <h4 align="center">Don't have an account? <a routerLink="/register" style="font-size: 25px; ">Register</a></h4>
 </div>
