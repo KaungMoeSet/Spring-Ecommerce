@@ -1,7 +1,7 @@
 <h2 align="center" style="color: blueviolet">Register Here!</h2>
-<div class="container-fluid"
-     style="padding-top: 1rem; width: 30%; align-self: center">
-  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+<div class="container-fluid col-lg-4 col-sm-4 col-md-5"
+     style="padding-top: 1rem; align-self: center">
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" id="formId">
     <div class="form-outline mb-2">
       <label class="form-label" for="username">User name:</label>
       <input type="text" id="username" class="form-control" formControlName="username" placeholder="John Wick"
@@ -19,12 +19,27 @@
       </div>
     </div>
     <div class="form-outline mb-2">
+      <label class="form-label" for="gender">Gender:</label>
+      <select id="gender" class="form-select" aria-label="Default select example" formControlName="gender">
+        <option [ngValue]="null" disabled>Choose your sex</option>
+        <option *ngFor="let gender of Genders" [ngValue]="gender">
+          {{gender}}
+        </option>
+      </select>
+    </div>
+    <div class="form-outline mb-2">
       <label class="form-label" for="password">Password:</label>
-      <input type="password" id="password" class="form-control" formControlName="username" placeholder="john123"
-             [ngClass]="{ 'is-invalid': submitted && registerFormControl.username.errors }"/>
+      <input type="password" id="password" class="form-control" formControlName="password" placeholder="john123"
+             [ngClass]="{ 'is-invalid': submitted && registerFormControl.password.errors }"/>
       <div *ngIf="submitted" class="invalid-feedback">
-        <div *ngIf="registerFormControl.username.errors?.['required']" role="alert">Password can't be empty</div>
+        <div *ngIf="registerFormControl.password.errors?.['required']" role="alert">Password can't be empty</div>
+        <div *ngIf="registerFormControl.password.errors?.['minLength']" role="alert">Password must be greater than 6 characters</div>
       </div>
     </div>
+    <button [disabled]="loading" class="btn btn-primary form-control" type="submit"
+            style="font-size: 20px; margin-top: 1rem; margin-bottom: 1rem" form="formId">
+      <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+      Register</button>
   </form>
+  <h4 align="center">Already have an account? <a routerLink="/login" style="font-size: 25px; ">Login</a></h4>
 </div>

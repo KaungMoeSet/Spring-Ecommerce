@@ -26,7 +26,7 @@ public class RegisterRequest {
 	private String email;
 	
 	@NotEmpty
-	@Size(max = 20,min = 8, message = "Minimum password length: 8 characters")
+	@Size(max = 20,min = 6, message = "Minimum password length: 6 characters")
 	private String password;
 
 	@DBRef

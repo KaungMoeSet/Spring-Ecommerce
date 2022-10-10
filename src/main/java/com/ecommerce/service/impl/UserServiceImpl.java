@@ -6,6 +6,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 import com.ecommerce.dto.JwtResponse;
 import com.ecommerce.dto.MyUserDetails;
 import com.ecommerce.dto.RegisterRequest;
+import com.ecommerce.dto.RegisterResponse;
 import com.ecommerce.model.Address;
 import com.ecommerce.model.ERole;
 import com.ecommerce.model.Role;
@@ -71,13 +74,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public String register(RegisterRequest registerRequest) {
+	public RegisterResponse register(RegisterRequest registerRequest) {
 		if (userRepository.existsByUsername(registerRequest.getUsername())) {
-			return "Error: Username is already taken!";
+			return new RegisterResponse(false,"Error: Username is already taken!");
 		}
 
 		if (userRepository.existsByEmail(registerRequest.getEmail())) {
-			return "Error: Email is already in use!";
+			return new RegisterResponse(false,"Error: Email is already in use!");
 		}
 
 		User user = new User(registerRequest.getUsername(), registerRequest.getGender(), registerRequest.getEmail(),
@@ -107,7 +110,7 @@ public class UserServiceImpl implements UserService {
 
 		user.setRoles(roles);
 		userRepository.save(user);
-		return "User Registered Successfully";
+		return new RegisterResponse(true, "Register successfull");
 	}
 
 	@Override

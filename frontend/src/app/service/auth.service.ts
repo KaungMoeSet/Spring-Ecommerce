@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 
-export const API_URL = "http://localhost:8080/login";
+export const API_URL = "http://localhost:8080/";
 @Injectable({
   providedIn: 'root'
 })
@@ -34,8 +34,17 @@ export class AuthService {
     return this.role;
   }
 
+  register(username: string, gender: string, email: string, password: string){
+    return this.http.post(API_URL+"register",  {
+      username,
+      gender,
+      email,
+      password
+    });
+  }
+
   login(username: string, password: string) {
-    return this.http.post(API_URL, {
+    return this.http.post(API_URL+"login", {
       username,
       password
     });

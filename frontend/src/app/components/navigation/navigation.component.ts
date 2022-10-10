@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 export class NavigationComponent implements OnInit {
 
   loggedType!: string;
+  isCollapsed = false;
   constructor(private authService: AuthService) {
 
     switch (this.authService.getRole()){

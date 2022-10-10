@@ -5,6 +5,9 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ecommerce.dto.JwtResponse;
 import com.ecommerce.dto.LoginRequest;
 import com.ecommerce.dto.RegisterRequest;
+import com.ecommerce.dto.RegisterResponse;
 import com.ecommerce.dto.Token;
 import com.ecommerce.model.Address;
 import com.ecommerce.model.User;
@@ -41,8 +45,14 @@ public class AuthController {
 	}
 	
 	@PostMapping("/register")
-	public String register(@Valid @RequestBody RegisterRequest registerRequest ) {
-		return userService.register(registerRequest);
+	public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest registerRequest ) throws JSONException {
+		RegisterResponse response = userService.register(registerRequest);
+		if(response.isUserExisted()) {
+			return new ResponseEntity<>(response.getMessage(), HttpStatus.OK);
+		}else {
+			return new ResponseEntity<>(response.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		
 	}
 	
 	@PostMapping("/addAddress")
