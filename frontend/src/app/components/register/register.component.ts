@@ -47,8 +47,8 @@ export class RegisterComponent implements OnInit {
     this.authService.register(user.username, user.gender.toUpperCase(), user.email, user.password)
       .subscribe(data => {
       this.registerOk(data);
-    // }, error => {
-    //   this.registerFail(error);
+    }, error => {
+      this.registerFail(error);
     });
   }
 

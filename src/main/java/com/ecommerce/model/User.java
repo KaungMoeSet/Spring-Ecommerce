@@ -1,8 +1,5 @@
 package com.ecommerce.model;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 
 import javax.validation.constraints.Email;
@@ -11,9 +8,6 @@ import javax.validation.constraints.Size;
 
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Document(collection = "users")
-public class User  extends BaseDocument {
+public class User extends BaseDocument {
 
 	/**
 	 * 
