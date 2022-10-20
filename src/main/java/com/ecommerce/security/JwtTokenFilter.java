@@ -11,7 +11,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class JwtTokenFilter extends OncePerRequestFilter {
 	
 	private JwtTokenProvider jwtTokenProvider;
@@ -28,6 +30,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 		try {
 			if (token != null && jwtTokenProvider.validateToken(token)) {
 				Authentication auth = jwtTokenProvider.getAuthentication(token);
+				log.info("Authentication " + auth);
 				SecurityContextHolder.getContext().setAuthentication(auth);
 			}
 		} catch (Exception ex) {

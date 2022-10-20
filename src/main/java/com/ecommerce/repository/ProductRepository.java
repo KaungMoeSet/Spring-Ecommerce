@@ -8,4 +8,5 @@ import com.ecommerce.model.Products;
 @Repository
 public interface ProductRepository extends ReactiveMongoRepository<Products, String>  {
 
+	Boolean existsByName(String name);
 }

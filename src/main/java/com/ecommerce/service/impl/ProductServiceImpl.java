@@ -12,6 +12,7 @@ import com.ecommerce.repository.ProductRepository;
 import com.ecommerce.service.ProductService;
 
 import lombok.extern.slf4j.Slf4j;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -35,10 +36,15 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	@Override
-	public void deleteProductById(String productId) {
-
+	public Mono<Void> deleteProduct(Products product) {
+		return productRepository.delete(product);
 	}
 
+	@Override
+	public Flux<Products> getAllProducts() {
+		return productRepository.findAll();
+	}
+	
 	@Override
 	public Optional<Products> getProductById(String id) {
 		return null;

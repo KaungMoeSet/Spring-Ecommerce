@@ -13,7 +13,7 @@ import com.ecommerce.model.User;
 public interface UserService {
 
 	List<User> getAllUsers();	
-	public JwtResponse login(String username, String password);
-	public RegisterResponse register(RegisterRequest registerRequest);
-	public User addAddress(Address address, Authentication auth);
+	JwtResponse login(String username, String password);
+	RegisterResponse register(RegisterRequest registerRequest);
+	User addAddress(Address address, Authentication auth);
 }

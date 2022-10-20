@@ -5,13 +5,16 @@ import java.util.Optional;
 
 import com.ecommerce.model.Products;
 
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface ProductService {
 
 	Mono<Products> saveProduct(Products productDto);
-	void deleteProductById(String productId);
+	Mono<Void> deleteProduct(Products product);
 	Optional<Products> getProductById(String id);
+	
+	Flux<Products> getAllProducts();
 	
 	Mono<Products> findById(String id);
 	List<Products> findByName(String name);

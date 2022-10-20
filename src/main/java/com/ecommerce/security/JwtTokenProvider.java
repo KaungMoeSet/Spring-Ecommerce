@@ -24,8 +24,10 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
+@Slf4j
 public class JwtTokenProvider {
 
 	@Value("${security.jwt.token.secret-key:secret-key}") //take key from app_properties
@@ -60,6 +62,7 @@ public class JwtTokenProvider {
 	
 	public Authentication getAuthentication(String token) {
 		UserDetails userDetails =  myUserDetailsService.loadUserByUsername(getUsername(token));
+		log.info("UserDetails " + userDetails.getUsername() + userDetails.getPassword() + userDetails.getAuthorities());
 		return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
 	}
 	
