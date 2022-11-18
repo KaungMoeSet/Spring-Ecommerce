@@ -1,6 +1,5 @@
 package com.ecommerce.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import com.ecommerce.model.Products;
@@ -15,11 +14,13 @@ public interface ProductService {
 	Optional<Products> getProductById(String id);
 	
 	Flux<Products> getAllProducts();
+	Flux<Products> getAllProductsByPriceAsc();
+	Flux<Products> getAllProductsByPriceDsc();
 	
 	Mono<Products> findById(String id);
-	List<Products> findByName(String name);
-	List<Products> findProductByPage(int pageNo, int size);
-	List<Products> findByCategory(String category);	
-	List<Products> findProductOrderByYear();
-	List<Products> findProductOrderByPrice();
+	Flux<Products> findByName(String name);
+	Flux<Products> findProductByPage(int pageNo, int size);
+	Flux<Products> findByCategory(String category);	
+	Flux<Products> findProductOrderByYear();
+	Flux<Products> findProductOrderByPrice();
 }

@@ -1,11 +1,14 @@
 package com.ecommerce.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -27,7 +30,10 @@ import com.ecommerce.repository.UserRepository;
 import com.ecommerce.security.JwtTokenProvider;
 import com.ecommerce.service.UserService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
 
 	@Autowired
@@ -47,9 +53,20 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private RoleRepository roleRepository;
-
+	
 	public List<User> getAllUsers() {
 		return userRepository.findAll();
+	}
+	
+	@Override
+	public List<User> getUsersByPage(int pageNo, int size) {
+		Page<User> users = userRepository.findAll(PageRequest.of(pageNo, size));
+		log.info("PageNo is " + pageNo + "Size " + size);
+		List<User> userList = new ArrayList<>();
+		for(User user: users) {
+			userList.add(user);
+		}
+		return userList;
 	}
 
 	@Override
@@ -130,4 +147,5 @@ public class UserServiceImpl implements UserService {
 		System.out.println(auth.getAuthorities());
 		return user;
 	}
+
 }

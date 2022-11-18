@@ -1,0 +1,9 @@
+.colorDiv label{
+  font-size: 23px;
+  text-shadow: 0.5px 0  0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+  margin-right: 5px;
+}
+
+.colorDiv input{
+  margin-right: 15px;
+}

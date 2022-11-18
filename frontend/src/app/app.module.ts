@@ -17,6 +17,9 @@ import { AdminPageComponent } from './page/admin-page/admin-page.component';
 import { CustomerAccountPageComponent } from './page/customer-account-page/customer-account-page.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {TokenInterceptor} from "./auth/interceptor/TokenInterceptor";
+import { AccessDeniedComponent } from './components/access-denied/access-denied.component';
+import {ModalModule} from "ngx-bootstrap/modal";
+import { ProductTableComponent } from './components/product-table/product-table.component';
 
 @NgModule({
   declarations: [
@@ -30,14 +33,17 @@ import {TokenInterceptor} from "./auth/interceptor/TokenInterceptor";
     OrderComponent,
     ProfileComponent,
     AdminPageComponent,
-    CustomerAccountPageComponent
+    CustomerAccountPageComponent,
+    AccessDeniedComponent,
+    ProductTableComponent
   ],
   imports: [
     HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ModalModule.forRoot()
   ],
   providers: [
     {

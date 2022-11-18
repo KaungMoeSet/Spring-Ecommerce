@@ -12,6 +12,7 @@ import com.ecommerce.model.User;
 
 public interface UserService {
 
+	List<User> getUsersByPage(int pageNo, int size);
 	List<User> getAllUsers();	
 	JwtResponse login(String username, String password);
 	RegisterResponse register(RegisterRequest registerRequest);

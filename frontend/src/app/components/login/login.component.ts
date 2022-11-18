@@ -48,9 +48,10 @@ export class LoginComponent implements OnInit {
   }
 
   private loginOk(response: any) {
-    console.log("Response ", response.role);
+    console.log("Response Role", response);
     console.log("token ", response.token);
     localStorage.setItem("token", response.token);
+    localStorage.setItem("role", response.role);
     this.authService.setAuthentication(response.token, response.role);
     if( response.role[0] == "USER"){
       this.router.navigate(['/home']);
@@ -67,6 +68,7 @@ export class LoginComponent implements OnInit {
       'Invalid username or password',
       'warning'
     )
+    this.loginForm.reset();
   }
 
   get loginFormControl() {

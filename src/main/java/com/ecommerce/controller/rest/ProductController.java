@@ -47,9 +47,9 @@ public class ProductController {
 		return productService.findById(productID).flatMap(existingProduct -> {
 			existingProduct.setName(product.getName());
 			existingProduct.setPrice(product.getPrice());
-			existingProduct.setYear(product.getYear());
+			existingProduct.setDate(product.getDate());
 			existingProduct.setCategory(product.getCategory());
-			existingProduct.setImg(product.getImg());
+			existingProduct.setImage(product.getImage());
 			existingProduct.setStatus(product.getStatus());
 			existingProduct.setQuantity(product.getQuantity());
 			existingProduct.setDescription(product.getDescription());

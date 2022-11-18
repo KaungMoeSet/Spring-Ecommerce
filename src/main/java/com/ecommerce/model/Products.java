@@ -1,11 +1,15 @@
 package com.ecommerce.model;
 
+import java.util.Date;
+import java.util.List;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.bson.types.Binary;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
 
@@ -21,15 +25,17 @@ public class Products extends BaseDocument {
 	private Float price;
 	
 	@NotNull
-	private Integer year;
+	private Date date;
 	
 	@NotNull
 	private Category category;
 	
-	private Binary img;
+	private byte[] image;
+	
+	private List<Color> colors;
 	
 	@NotNull
-	private Status status;
+	private EStatus status;
 	
 	@NotNull
 	private Integer quantity;

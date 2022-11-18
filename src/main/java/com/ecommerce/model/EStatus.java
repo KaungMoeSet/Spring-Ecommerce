@@ -1,7 +1,7 @@
 package com.ecommerce.model;
 
-public enum Status {
-	INSTOCK,
+public enum EStatus {
+	IN_STOCK,
 	OUT_OF_STOCK,
-	COMMING_SOON
+	COMING_SOON
 }

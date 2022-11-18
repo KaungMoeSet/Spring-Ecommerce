@@ -10,9 +10,11 @@ import {ProfileComponent} from "./components/profile/profile.component";
 import {OrderComponent} from "./components/order/order.component";
 import {AdminPageComponent} from "./page/admin-page/admin-page.component";
 import {CustomerAccountPageComponent} from "./page/customer-account-page/customer-account-page.component";
+import {AccessDeniedComponent} from "./components/access-denied/access-denied.component";
+import {NavigationComponent} from "./components/navigation/navigation.component";
 
 const routes: Routes = [
-  {path:  "", pathMatch:  "full",redirectTo:  "home"},
+  {path:  "", pathMatch:  "full",redirectTo:  "login"},
   { path: 'home',
     component: HomePageComponent,
     canActivate: [AuthGuard] },
@@ -31,10 +33,15 @@ const routes: Routes = [
   { path: 'accounts',
     component: CustomerAccountPageComponent,
     canActivate: [AuthGuard] },
+  { path: 'navBar',
+    component: NavigationComponent,
+    canActivate: [AuthGuard] },
   { path: 'login',
     component: LoginComponent },
   { path:  'register',
     component: RegisterComponent },
+  { path: 'access-denied',
+    component: AccessDeniedComponent },
   { path: '**',
     component: NotFoundComponent },
 ];

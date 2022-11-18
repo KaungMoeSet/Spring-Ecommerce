@@ -5,6 +5,11 @@ import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.ecommerce.model.Products;
@@ -46,32 +51,44 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	@Override
+	public Flux<Products> getAllProductsByPriceAsc() {
+		return null;
+	}
+	
+	@Override
+	public Flux<Products> getAllProductsByPriceDsc() {
+		return null;
+	}
+	
+	@Override
 	public Optional<Products> getProductById(String id) {
 		return null;
 	}
 
 	@Override
-	public List<Products> findByName(String name) {
+	public Flux<Products> findByName(String name) {
 		return null;
 	}
 
 	@Override
-	public List<Products> findProductByPage(int pageNo, int size) {
+	public Flux<Products> findProductByPage(int pageNo, int size) {
+		Pageable findByPage = (Pageable) PageRequest.of(pageNo, size);
+		
+		return productRepository.retrieveAllProductsPaged(findByPage);
+	}
+
+	@Override
+	public Flux<Products> findByCategory(String category) {
 		return null;
 	}
 
 	@Override
-	public List<Products> findByCategory(String category) {
+	public Flux<Products> findProductOrderByYear() {
 		return null;
 	}
 
 	@Override
-	public List<Products> findProductOrderByYear() {
-		return null;
-	}
-
-	@Override
-	public List<Products> findProductOrderByPrice() {
+	public Flux<Products> findProductOrderByPrice() {
 		return null;
 	}
 

@@ -1,2 +1,136 @@
 <app-navigation></app-navigation>
+<button type="button" class="btn btn-primary" (click)="newProductClick()">
+  Add New Product
+</button>
+
+<ng-template #template>
+  <form [formGroup]="productForm" (ngSubmit)="saveOrUpdateProduct()">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">New Product</h4>
+      <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <div class="container row">
+        <div class="form-outline mb-2">
+          <label class="form-label" for="productName">Product Name :</label>
+          <input type="text" id="productName" class="form-control" formControlName="productName"
+                 [ngClass]="{ 'is-invalid': submitted && productFormControl.productName.errors }"/>
+          <div *ngIf="submitted" class="invalid-feedback">
+            <div *ngIf="productFormControl.productName.errors?.['required']" role="alert">Product name can't be empty
+            </div>
+          </div>
+        </div>
+
+        <div class="form-outline mb-2">
+          <label class="form-label" for="price">Price :</label>
+          <input type="number" id="price" class="form-control" formControlName="price"
+                 (keypress)="priceKeyPress($event)" min = "0"
+                 [ngClass]="{ 'is-invalid': submitted && productFormControl.price.errors }"/>
+          <div *ngIf="submitted" class="invalid-feedback">
+            <div *ngIf="productFormControl.price.errors?.['required']" role="alert">Price can't be empty</div>
+          </div>
+        </div>
+
+        <div class="form-outline mb-2">
+          <label class="form-label" for="date">Date :</label>
+          <input type="date" id="date" class="form-control" formControlName="date"
+                 min="{{minDate | date:'yyyy-MM-dd'}}" max="{{maxDate | date:'yyyy-MM-dd'}}"/>
+          <div *ngIf="submitted" class="invalid-feedback">
+            <div *ngIf="productFormControl.date.errors?.['required']" role="alert">Date can't be empty</div>
+          </div>
+        </div>
+
+        <div class="form-outline mb-2">
+          <label class="form-label" for="category">Category :</label>
+          <select id="category" class="form-select" aria-label="Default select example" formControlName="category">
+            <option [ngValue]="null" disabled>Choose category</option>
+            <option *ngFor="let category of Categories" [ngValue]="category">
+              {{category}}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-outline mb-2 colorDiv" formGroupName="colors">
+            <h5> Select available colors : </h5>
+            <div class="container-fluid">
+              <label class="form-label" for="black" >Black</label>
+              <input type="checkbox" id="black" formControlName="black" />
+
+              <label class="form-label" for="white" style="color: white">White</label>
+              <input type="checkbox" id="white" formControlName="white" />
+
+              <label class="form-label" for="gray" style="color: gray">Gray</label>
+              <input type="checkbox" id="gray" formControlName="gray" />
+
+              <label class="form-label" for="blue" style="color: blue">Blue</label>
+              <input type="checkbox" id="blue" formControlName="blue" />
+            </div>
+
+            <div class="container-fluid">
+              <label class="form-label" for="green" style="color: green">Green</label>
+              <input type="checkbox" id="green" formControlName="green" />
+
+              <label class="form-label" for="purple" style="color: purple">Purple</label>
+              <input type="checkbox" id="purple" formControlName="purple" />
+
+              <label class="form-label" for="violet" style="color: violet">Violet</label>
+              <input type="checkbox" id="violet" formControlName="violet" />
+
+              <label class="form-label" for="yellow" style="color: yellow">Yellow</label>
+              <input type="checkbox" id="yellow" formControlName="yellow" />
+            </div>
+
+<!--          <section [formGroup]="productColors">-->
+<!--            <h4>You chose:</h4>-->
+<!--            {{productColors.value | json}}-->
+<!--          </section>-->
+        </div>
+
+        <div class="form-outline mb-2">
+          <label class="form-label" for="status">Status :</label>
+          <select id="status" class="form-select" aria-label="Default select example" formControlName="status">
+            <option [ngValue]="null" disabled>Choose product status</option>
+            <option *ngFor="let status of Status" [ngValue]="status">
+              {{status}}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-outline mb-2">
+          <label class="form-label" for="quantity">Quantity :</label>
+          <input type="number" id="quantity" class="form-control" formControlName="quantity"
+                 min = "0" max="50" (keypress)="quantityKeyPress($event)"
+                 [ngClass]="{ 'is-invalid': submitted && productFormControl.quantity.errors }"/>
+          <div *ngIf="submitted" class="invalid-feedback">
+            <div *ngIf="productFormControl.quantity.errors?.['required']" role="alert">Quantity can't be empty</div>
+          </div>
+        </div>
+
+        <div class="form-outline mb-2">
+          <label class="form-label" for="description">Product Description :</label>
+          <textarea id="description" class="form-control" formControlName="description" rows="5" cols="33"></textarea>
+        </div>
+
+        <div class="form-outline mb-2">
+          <input type="file" accept="image/*" formControlName="image"/>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary"
+              (click)="closeModal()">Close
+      </button>
+
+      <button type="submit" class="btn btn-primary"
+              [disabled]="!productForm.valid">Save
+      </button>
+    </div>
+  </form>
+</ng-template>
+
 <p>admin-page works!</p>

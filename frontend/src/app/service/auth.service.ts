@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 
-export const API_URL = "http://localhost:8080/";
+export const HOST_URL = "http://localhost:8080/";
 @Injectable({
   providedIn: 'root'
 })
@@ -14,6 +14,24 @@ export class AuthService {
 
   constructor(private router: Router,
               private http: HttpClient) { }
+
+  loadToken() {
+    let token = localStorage.getItem("token");
+    let role: string = localStorage.getItem("role")!;
+    if (token) {
+      if(role == "ADMIN") {
+        let arrAdmin = ["ADMIN"];
+        this.setAuthentication(token, arrAdmin);
+      }
+      if(role == "USER") {
+        let arrUser = ["USER"];
+        this.setAuthentication(token, arrUser);
+      }
+      return true;
+    }else {
+      return false;
+    }
+  }
 
   isAuthenticated() {
     return this.authenticated;
@@ -35,7 +53,7 @@ export class AuthService {
   }
 
   register(username: string, gender: string, email: string, password: string){
-    return this.http.post(API_URL+"register",  {
+    return this.http.post(HOST_URL+"register",  {
       username,
       gender,
       email,
@@ -44,7 +62,7 @@ export class AuthService {
   }
 
   login(username: string, password: string) {
-    return this.http.post(API_URL+"login", {
+    return this.http.post(HOST_URL+"login", {
       username,
       password
     });
