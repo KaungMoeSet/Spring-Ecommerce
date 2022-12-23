@@ -9,7 +9,7 @@ import {CartComponent} from "./components/cart/cart.component";
 import {ProfileComponent} from "./components/profile/profile.component";
 import {OrderComponent} from "./components/order/order.component";
 import {AdminPageComponent} from "./page/admin-page/admin-page.component";
-import {CustomerAccountPageComponent} from "./page/customer-account-page/customer-account-page.component";
+import {CustomerAccountPageComponent} from "./page/account-page/customer-account-page.component";
 import {AccessDeniedComponent} from "./components/access-denied/access-denied.component";
 import {NavigationComponent} from "./components/navigation/navigation.component";
 

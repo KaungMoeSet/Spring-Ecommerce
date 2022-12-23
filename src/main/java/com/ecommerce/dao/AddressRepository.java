@@ -1,4 +1,4 @@
-package com.ecommerce.repository;
+package com.ecommerce.dao;
 
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import org.springframework.stereotype.Repository;

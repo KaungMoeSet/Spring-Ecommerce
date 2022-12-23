@@ -10,9 +10,6 @@ import lombok.Data;
 @Document(collection="role")
 public class Role implements GrantedAuthority {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	@Id

@@ -1,1 +1,30 @@
-<p>product-table works!</p>
+<div class="m-auto mt-3" style="width: 90%">
+<table class="table table-bordered w-100 h-100">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Category</th>
+    <th>Status</th>
+    <th>Quantity</th>
+    <th>Price</th>
+    <th>Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let product of products, index as i;">
+    <td>{{product.name}}</td>
+    <td>{{product.category}}</td>
+    <td class="{{product.status}}">{{product.status}}</td>
+    <td>{{product.quantity}}</td>
+    <td>{{product.price}}</td>
+    <td>
+      <button type="button" class="btn btn-primary" (click)="editProduct(i)">Edit</button>
+      &nbsp;
+      <button type="button" class="btn btn-primary" (click)="detailProduct(product.id!)">Detail</button>
+      &nbsp;
+      <button type="button" class="btn btn-danger" (click)="deleteProduct(i)">Delete</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+</div>

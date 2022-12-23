@@ -9,18 +9,20 @@ import reactor.core.publisher.Mono;
 
 public interface ProductService {
 
-	Mono<Products> saveProduct(Products productDto);
+	Mono<Products> saveProduct(Products product);
+	Mono<Products> updateProuduct(String id, Products product);
 	Mono<Void> deleteProduct(Products product);
-	Optional<Products> getProductById(String id);
 	
+	Mono<Products> getProductById(String id);
 	Flux<Products> getAllProducts();
 	Flux<Products> getAllProductsByPriceAsc();
 	Flux<Products> getAllProductsByPriceDsc();
+	Flux<Products> getProductsByPage(int pageNo, int size);
 	
-	Mono<Products> findById(String id);
-	Flux<Products> findByName(String name);
-	Flux<Products> findProductByPage(int pageNo, int size);
-	Flux<Products> findByCategory(String category);	
-	Flux<Products> findProductOrderByYear();
-	Flux<Products> findProductOrderByPrice();
+	Flux<Products> searchByName(String name);
+	Flux<Products> searchByCategory(String category);	
+	Flux<Products> searchByStatus(String status);
+	Flux<Products> searchByCategoryAndStatus(String category, String status);
+	Flux<Products> searchProductOrderByYear();
+	Flux<Products> searchProductOrderByPrice();
 }

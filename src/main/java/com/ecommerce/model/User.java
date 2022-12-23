@@ -37,7 +37,7 @@ public class User extends BaseDocument {
 	private String password;
 
 	@DBRef
-	private Set<Role> roles;
+	private Set<Role> role;
 	
 	@DBRef
 	private Address address;

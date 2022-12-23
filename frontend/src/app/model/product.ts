@@ -2,28 +2,28 @@ type Color = {
   color: string;
 }
 
+type ProductDetail = {
+  id: string;
+  date: Date;
+  image: string;
+  color: Color[];
+  description: string;
+}
 export class Product {
   id?: string;
   name: string;
-  price: number;
-  date: Date;
-  image: string;
   category: string;
-  color: Color[];
   status: string;
   quantity: number;
-  description: string;
+  price: number;
+  details?: ProductDetail;
 
-  constructor(id: string, name: string, price: number, date: Date, image: string, category: string, color: Color[], status: string, quantity: number, description: string) {
+  constructor(id: string, name: string, category: string, status: string, quantity: number, price: number) {
     this.id = id;
     this.name = name;
-    this.price = price;
-    this.date = date;
-    this.image = image;
     this.category = category;
-    this.color = color;
     this.status = status;
     this.quantity = quantity;
-    this.description = description;
+    this.price = price;
   }
 }

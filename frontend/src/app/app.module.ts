@@ -14,7 +14,7 @@ import { CartComponent } from './components/cart/cart.component';
 import { OrderComponent } from './components/order/order.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AdminPageComponent } from './page/admin-page/admin-page.component';
-import { CustomerAccountPageComponent } from './page/customer-account-page/customer-account-page.component';
+import { CustomerAccountPageComponent } from './page/account-page/customer-account-page.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {TokenInterceptor} from "./auth/interceptor/TokenInterceptor";
 import { AccessDeniedComponent } from './components/access-denied/access-denied.component';

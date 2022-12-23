@@ -1,4 +1,4 @@
-package com.ecommerce.repository;
+package com.ecommerce.dao;
 
 import java.util.Optional;
 

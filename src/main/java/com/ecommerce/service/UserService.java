@@ -11,10 +11,13 @@ import com.ecommerce.model.Address;
 import com.ecommerce.model.User;
 
 public interface UserService {
-
-	List<User> getUsersByPage(int pageNo, int size);
-	List<User> getAllUsers();	
+		
 	JwtResponse login(String username, String password);
 	RegisterResponse register(RegisterRequest registerRequest);
 	User addAddress(Address address, Authentication auth);
+	
+	List<User> getUsersByPage(int pageNo, int size);
+	List<User> getAllUsers();
+	List<User> getAdminAccount();
+	List<User> getUserAccount();
 }

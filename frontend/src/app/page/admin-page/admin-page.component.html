@@ -1,12 +1,14 @@
 <app-navigation></app-navigation>
+<div class="d-flex justify-content-end mx-auto mt-3" style="width: 90%">
 <button type="button" class="btn btn-primary" (click)="newProductClick()">
   Add New Product
 </button>
+</div>
 
 <ng-template #template>
   <form [formGroup]="productForm" (ngSubmit)="saveOrUpdateProduct()">
     <div class="modal-header">
-      <h4 class="modal-title pull-left">New Product</h4>
+      <h4 class="modal-title pull-left">{{editMode ? 'Edit Product': 'New Product'}}</h4>
       <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
         <span aria-hidden="true" class="visually-hidden">&times;</span>
       </button>
@@ -127,10 +129,12 @@
       </button>
 
       <button type="submit" class="btn btn-primary"
-              [disabled]="!productForm.valid">Save
+              [disabled]="!productForm.valid">{{editMode ? 'Update' : 'Save'}}
       </button>
     </div>
   </form>
 </ng-template>
 
-<p>admin-page works!</p>
+<app-product-table [products]="products"
+                    (editProductEvent)="editClicked($event)"
+                    (deleteProductEvent)="deleteClicked($event)"></app-product-table>

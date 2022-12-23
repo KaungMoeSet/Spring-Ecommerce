@@ -1,6 +1,8 @@
 import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {FormBuilder, Validators} from "@angular/forms";
+import {Product} from "../../model/product";
+import {ProductService} from "../../service/product.service";
 
 @Component({
   selector: 'app-admin-page',
@@ -11,19 +13,25 @@ export class AdminPageComponent implements OnInit {
 
   @ViewChild('template') template: any = null;
   modalRef?: BsModalRef;
-  products: Array<string> = [];
+  products: Array<Product> = [];
   loading = false;
   submitted = false;
   minDate: Date;
   maxDate: Date;
+  editMode = false;
 
   constructor(private formBuilder: FormBuilder,
-              private modalService: BsModalService,) {
+              private modalService: BsModalService,
+              private productService: ProductService) {
     const currentYear = new Date().getFullYear();
     this.minDate = new Date(currentYear - 20, 0, 1);
     console.log(this.minDate);
     this.maxDate = new Date(currentYear + 1, 11, 31);
     console.log(this.maxDate);
+
+    productService.products.subscribe(products => {
+      this.products = products;
+    })
   }
 
   productForm = this.formBuilder.group({
@@ -105,6 +113,16 @@ export class AdminPageComponent implements OnInit {
   saveOrUpdateProduct() {
     console.log("Form data: ", this.productForm.value);
     console.log("Color data", this.productForm.value.colors);
+  }
+
+  editClicked(product: Product) {
+    this.productForm.patchValue({...product});
+    this.openModal(this.template);
+    this.editMode = true;
+  }
+
+  deleteClicked(product: Product) {
+
   }
 
   get productFormControl() {

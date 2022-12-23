@@ -1,0 +1,9 @@
+.IN_STOCK {
+  color: green;
+}
+.OUT_OF_STOCK {
+  color: red;
+}
+.COMING_SOON {
+  color: gold;
+}

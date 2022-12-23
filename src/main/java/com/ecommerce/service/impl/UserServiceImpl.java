@@ -1,6 +1,7 @@
 package com.ecommerce.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,6 +17,9 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.ecommerce.dao.AddressRepository;
+import com.ecommerce.dao.RoleRepository;
+import com.ecommerce.dao.UserRepository;
 import com.ecommerce.dto.JwtResponse;
 import com.ecommerce.dto.MyUserDetails;
 import com.ecommerce.dto.RegisterRequest;
@@ -24,9 +28,6 @@ import com.ecommerce.model.Address;
 import com.ecommerce.model.ERole;
 import com.ecommerce.model.Role;
 import com.ecommerce.model.User;
-import com.ecommerce.repository.AddressRepository;
-import com.ecommerce.repository.RoleRepository;
-import com.ecommerce.repository.UserRepository;
 import com.ecommerce.security.JwtTokenProvider;
 import com.ecommerce.service.UserService;
 
@@ -54,21 +55,6 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private RoleRepository roleRepository;
 	
-	public List<User> getAllUsers() {
-		return userRepository.findAll();
-	}
-	
-	@Override
-	public List<User> getUsersByPage(int pageNo, int size) {
-		Page<User> users = userRepository.findAll(PageRequest.of(pageNo, size));
-		log.info("PageNo is " + pageNo + "Size " + size);
-		List<User> userList = new ArrayList<>();
-		for(User user: users) {
-			userList.add(user);
-		}
-		return userList;
-	}
-
 	@Override
 	public JwtResponse login(String username, String password) {
 		try {
@@ -79,7 +65,7 @@ public class UserServiceImpl implements UserService {
 			List<String> roles = user.getAuthorities().stream().map(item -> item.getAuthority())
 					.collect(Collectors.toList());
 			String jwtToken = jwtTokenProvider.createToken(username,
-					userRepository.findByUsername(username).getRoles());
+					userRepository.findByUsername(username).getRole());
 
 			return new JwtResponse(jwtToken, user.getId(), user.getUsername(), user.getPassword(), roles);
 		} catch (AuthenticationException e) {
@@ -101,29 +87,29 @@ public class UserServiceImpl implements UserService {
 		User user = new User(registerRequest.getUsername(), registerRequest.getGender(), registerRequest.getEmail(),
 				passwordEncoder.encode(registerRequest.getPassword()));
 
-		List<String> regRole = registerRequest.getRoles();
-		Set<Role> roles = new HashSet<>();
+		List<String> regRole = registerRequest.getRole();
+		Set<Role> role = new HashSet<>();
 
 		if (regRole == null) {
 			Role userRole = roleRepository.findByName(ERole.USER)
 					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-			roles.add(userRole);
+			role.add(userRole);
 		} else {
 			regRole.forEach(checkRole -> {
 				if (checkRole.equals("admin")) {
 					Role adminRole = roleRepository.findByName(ERole.ADMIN)
 							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-					roles.add(adminRole);
+					role.add(adminRole);
 				} else {
 					Role userRole = roleRepository.findByName(ERole.USER)
 							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-					roles.add(userRole);
+					role.add(userRole);
 				}
 
 			});
 		}
 
-		user.setRoles(roles);
+		user.setRole(role);
 		userRepository.save(user);
 		return new RegisterResponse(true, "Register successfull");
 	}
@@ -146,6 +132,36 @@ public class UserServiceImpl implements UserService {
 		}
 		System.out.println(auth.getAuthorities());
 		return user;
+	}
+	
+	@Override
+	public List<User> getAllUsers() {
+		return userRepository.findAll();
+	}
+	
+	@Override
+	public List<User> getUsersByPage(int pageNo, int size) {
+		Page<User> users = userRepository.findAll(PageRequest.of(pageNo, size));
+		log.info("PageNo: " + pageNo + " |Size: " + size);
+		List<User> userList = new ArrayList<>();
+		for(User user: users) {
+			Collection<Role> role =  user.getRole();
+			log.info(role.toString());
+				log.info("User: "+ user.getUsername() + " |Role: " + user.getRole());
+			userList.add(user);
+		}
+		return userList;
+	}
+
+	@Override
+	public List<User> getAdminAccount() {
+//		return userRepository.findByRole(roleRepository.findByName(ERole.ADMIN));
+		return null;
+	}
+
+	@Override
+	public List<User> getUserAccount() {
+		return null;
 	}
 
 }

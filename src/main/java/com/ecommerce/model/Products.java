@@ -7,6 +7,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -22,17 +23,7 @@ public class Products extends BaseDocument {
 	private String name;
 	
 	@NotNull
-	private Float price;
-	
-	@NotNull
-	private Date date;
-	
-	@NotNull
 	private Category category;
-	
-	private byte[] image;
-	
-	private List<Color> colors;
 	
 	@NotNull
 	private EStatus status;
@@ -40,7 +31,9 @@ public class Products extends BaseDocument {
 	@NotNull
 	private Integer quantity;
 	
-	@NotEmpty
-	private String description;
+	@NotNull
+	private Float price;
 	
+	@DBRef
+	private ProductDetail details;
 }

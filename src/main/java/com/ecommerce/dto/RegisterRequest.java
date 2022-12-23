@@ -30,5 +30,5 @@ public class RegisterRequest {
 	private String password;
 
 	@DBRef
-	private List<String> roles;
+	private List<String> role;
 }
